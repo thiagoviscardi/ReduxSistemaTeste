@@ -4,17 +4,35 @@ import {
   ProdContainer,
   Table,
   Column,
-  DeleteButton,
-  EditButton,
 } from "./style.js";
 import { getAll } from "../../services/products.js";
 import Delete from "../Delete/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import { listItem } from "../../store/list/actions.js";
 // import { Lista } from "../../interfaces/index.ts";
+import Button from '@material-ui/core/Button';
+import {Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText} from '@material-ui/core';
+import Grid from '@material-ui/core/Button';
+
 export default function List() {
   const [lista, setLista] = useState([]);//<Lista>
   const [busca, setBusca] = useState("");
-  console.log(lista, "lista");
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const listaProdutos = useSelector((state)=>state.lista)
+  const dispatch = useDispatch();
+  console.log(lista, "lista");
+  const listasSim = dispatch(listItem())
+  console.log(listasSim, "listasSim");
   useEffect(() => {
     getData();
   }, []);
@@ -24,13 +42,44 @@ export default function List() {
     setLista(res);
   }
 
+  const allItens = Object.assign([], lista, listaProdutos);
+  console.log(listaProdutos, 'o que tem aquiii')
+  console.log(lista, 'listalista')
+
   function list() {
     if (lista && lista[0]) {
-      const filtredList = lista.filter((lista) => lista.name.startsWith(busca));
+      const filtredList = allItens.filter((allItens) => allItens.name.startsWith(busca));
 
       console.log(filtredList, 'filtredList')
       return filtredList.map((item) => (
         <div>
+        <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Open alert dialog
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
           <Table>
             <tr>
               <Column width="20%" bColor="#ccc">
@@ -60,14 +109,25 @@ export default function List() {
                 <Delete id = {item.id}/>
                 <Link style={{textDecoradion:'none', color:'inherit'}} 
                     to={{pathname:"/edit", state:{idEdit:{idEditar:item.id}}}} >
-                  <EditButton>
-                    Editar
-                  </EditButton>
+                  <Button style={{width:'100%'}} variant="contained" color="primary">Editar</Button>
                 </Link>
               </Column>
-               
             </tr>
           </Table>
+          <Grid>
+            <Grid >
+              <p>xs=6 md=8</p>
+            </Grid>
+            <Grid item xs={1} md={2}>
+              <p>xs=6 md=2</p>
+            </Grid>
+            <Grid item xs={1} md={1}>
+              <p>xs=6 md=1</p>
+            </Grid>
+            <Grid item xs={1} md={1}>
+              <p>xs=6 md=1</p>
+            </Grid>
+          </Grid>
         </div>
       ));
     }

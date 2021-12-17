@@ -22,16 +22,3 @@ width:${props => props.width};
 background-color:${props => props.bColor};
 `;
 
-export const EditButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  width: 100%;
-  text-align:center;
-  margin:0 auto;
-  background-color: #ccc;
-  a{
-    text-decoration:none;
-  }
-`;
-

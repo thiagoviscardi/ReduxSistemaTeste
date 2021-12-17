@@ -1,14 +1,13 @@
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-import { DeleteButton } from './style';
 import {remove} from '../../services/products.js';
 import { useToasts } from "react-toast-notifications";
+import Button from '@material-ui/core/Button';
 
 export default function Delete(props){
     const history = useHistory();
     const {id} =props;
     const { addToast } = useToasts();
-    
     
     async function productsDelete(){
 
@@ -34,7 +33,7 @@ export default function Delete(props){
 
     return(
         <div>
-            <DeleteButton onClick={productsDelete}>Deleta Produto</DeleteButton>
+            <Button style={{width:'100%'}}  variant="contained" color="primary" onClick={productsDelete}>Deleta Produto</Button>
         </div>
     )
 }

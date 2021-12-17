@@ -1,15 +1,5 @@
 import styled from 'styled-components';
 
-export const EditButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  width: 100%;
-  text-align:center;
-  margin:0 auto;
-  background-color: #ccc;
-`;
-
 export const Label = styled.label`
   padding: 10px 10px 10px 20px;
   font-size:18px;
